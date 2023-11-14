@@ -121,6 +121,7 @@ namespace WpfGameSandbox
             if (ParcelTop > 400)
             {
                 ResetParcel();
+                ResetParcel();
             } 
 
             //Rita ut paketet
