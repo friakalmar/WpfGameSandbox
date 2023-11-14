@@ -13,7 +13,7 @@
         <Image x:Name="Ship" Width="60" Height="60" Canvas.Left="389" Source="/Images/SpaceShip.png" Stretch="Fill" Canvas.Top="366"  HorizontalAlignment="Center" VerticalAlignment="Top"/>
         <Image x:Name="Parcel" Height="56" Canvas.Left="406" Source="/Images/parcel.png" Stretch="Fill" Canvas.Top="84" Width="47" HorizontalAlignment="Left" VerticalAlignment="Center"/>
         <Rectangle Height="20" Canvas.Left="24" Stroke="Black" Canvas.Top="24" Width="200" HorizontalAlignment="Center" VerticalAlignment="Top" Fill="#FFEDEDED"/>
-        <Rectangle x:Name="LifeBar" Height="20" Canvas.Left="24" Stroke="Black" Canvas.Top="24" Width="20" HorizontalAlignment="Left" VerticalAlignment="Center">
+        <Rectangle x:Name="LifeBar" Height="20" Canvas.Left="24" Stroke="Black" Canvas.Top="24" Width="100" HorizontalAlignment="Left" VerticalAlignment="Center">
             <Rectangle.Fill>
                 <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
                     <GradientStop Color="#FFD8E2D8" Offset="0"/>

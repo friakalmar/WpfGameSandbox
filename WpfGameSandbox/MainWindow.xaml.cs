@@ -30,7 +30,7 @@ namespace WpfGameSandbox
         int ShipLeft = 350;
 
         int ParcelTop = 0;
-        int ParcelLeft = 200;
+        int ParcelLeft { get; set; } = 200;
 
         //Shot grafik
         BitmapImage shotTexture = new BitmapImage(new Uri("pack://application:,,,/Images/shot.png"));
@@ -39,9 +39,10 @@ namespace WpfGameSandbox
         List<Image> Shots = new List<Image>();
 
         List<Image> Enemies = new List<Image>();
-        int EnemyDelay = 30;
+        int EnemyDelay = 40;
 
         int PlayerLife = 3;
+        protected int PlayerEnergi = 100;
 
         int Points = 0;
 
@@ -52,9 +53,9 @@ namespace WpfGameSandbox
             InitializeComponent();
 
             Timer.Tick += new EventHandler(Timer_Tick);
-            Timer.Interval = TimeSpan.FromMilliseconds(10);
+            Timer.Interval = TimeSpan.FromMilliseconds(15);
             Timer.Start();
-            LifeBar.Width = 10;
+            LifeBar.Width = PlayerEnergi;
         }
 
         private void WpfGameSandbox_KeyDown(object sender, KeyEventArgs e)
@@ -107,14 +108,38 @@ namespace WpfGameSandbox
         }
         private void MoveParcel()
         {
+            Rect player = new Rect(Canvas.GetLeft(Ship), Canvas.GetTop(Ship), Ship.Width, Ship.Height);
+            Rect parcel = new Rect(ParcelLeft, ParcelTop, Parcel.Width, Parcel.Height);
             ParcelTop += 5;
             if (ParcelTop > 400)
             {
-                ParcelLeft = random.Next(0, 730);
-                ParcelTop = -50;
+                ResetParcel();
+            } 
+            if (player.IntersectsWith(parcel) )
+               {
+                if(PlayerEnergi <= 180)
+                {
+                    PlayerEnergi += 20;
+                 }
+                if (PlayerEnergi >= 200)
+                {
+                    PlayerEnergi = 20;
+                    PlayerLife++;
+                    
+                }
+                 
+                LifeBar.Width = PlayerEnergi;
+                ResetParcel();
             }
             Canvas.SetTop(Parcel, ParcelTop);
             Canvas.SetLeft(Parcel, ParcelLeft);
+            DrawScore();
+        }
+
+        void ResetParcel()
+        {
+            ParcelLeft = random.Next(0, 730);
+            ParcelTop = -50;
         }
 
         private void CreateEnemies()
@@ -122,7 +147,7 @@ namespace WpfGameSandbox
             EnemyDelay--;
             if(EnemyDelay < 0)
             {
-                EnemyDelay = 30;
+                EnemyDelay = 40;
                 Image img = new Image() { Width=50,Height=50};
                 Canvas.SetLeft(img, random.Next(10,500));
                 Canvas.SetTop(img,0);
