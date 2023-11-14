@@ -60,6 +60,9 @@ namespace WpfGameSandbox
 
         private void WpfGameSandbox_KeyDown(object sender, KeyEventArgs e)
         {
+
+            // Lyssna av tangentbordet!
+
             if (e.Key == Key.Left)
             {
                 goLeft = true; goRight = false;
@@ -82,6 +85,7 @@ namespace WpfGameSandbox
             }
             if (e.Key == Key.Space)
             {
+                //Skapa skott
                 CreateShot();
             }
             if(e.Key == Key.X) {
@@ -108,31 +112,39 @@ namespace WpfGameSandbox
         }
         private void MoveParcel()
         {
+            //Flytta paketet och kolla om man träffar den
+            ParcelTop += 5;
             Rect player = new Rect(Canvas.GetLeft(Ship), Canvas.GetTop(Ship), Ship.Width, Ship.Height);
             Rect parcel = new Rect(ParcelLeft, ParcelTop, Parcel.Width, Parcel.Height);
-            ParcelTop += 5;
+
+            //Om paketet åkt för långt
             if (ParcelTop > 400)
             {
                 ResetParcel();
             } 
-            if (player.IntersectsWith(parcel) )
-               {
-                if(PlayerEnergi <= 180)
+
+            //Rita ut paketet
+            Canvas.SetTop(Parcel, ParcelTop);
+            Canvas.SetLeft(Parcel, ParcelLeft);
+
+            //Koll om krock med spelare
+            if (player.IntersectsWith(parcel))
+            {
+                if (PlayerEnergi <= 180)
                 {
                     PlayerEnergi += 20;
-                 }
+                }
                 if (PlayerEnergi >= 200)
                 {
                     PlayerEnergi = 20;
                     PlayerLife++;
-                    
+
                 }
-                 
+
                 LifeBar.Width = PlayerEnergi;
                 ResetParcel();
             }
-            Canvas.SetTop(Parcel, ParcelTop);
-            Canvas.SetLeft(Parcel, ParcelLeft);
+
             DrawScore();
         }
 
