@@ -21,6 +21,7 @@ namespace WpfGameSandbox
     /// </summary>
     public partial class MainWindow : Window
     {
+        double ShipAngle = 0;
         Random random = new Random();
         DispatcherTimer Timer = new DispatcherTimer();
 
@@ -34,12 +35,16 @@ namespace WpfGameSandbox
 
         //Shot grafik
         BitmapImage shotTexture = new BitmapImage(new Uri("pack://application:,,,/Images/shot.png"));
+
         BitmapImage enemyTexture = new BitmapImage(new Uri("pack://application:,,,/Images/Enemy.png"));
+
         //Skapar en tom lista som ska innehålla alla skott!
         List<Image> Shots = new List<Image>();
 
         List<Image> Enemies = new List<Image>();
-        int EnemyDelay = 40;
+
+
+        int EnemyDelay = 10;
 
         int PlayerLife = 3;
         protected int PlayerEnergi = 100;
@@ -62,6 +67,13 @@ namespace WpfGameSandbox
         {
 
             // Lyssna av tangentbordet!
+
+            if(e.Key==Key.P)
+            {
+                ShipAngle += 10;
+                Ship.RenderTransform = new RotateTransform(ShipAngle,Ship.Width/2,Ship.Height/2);
+            }
+
 
             if (e.Key == Key.Left)
             {
@@ -121,7 +133,7 @@ namespace WpfGameSandbox
             if (ParcelTop > 400)
             {
                 ResetParcel();
-                ResetParcel();
+              
             } 
 
             //Rita ut paketet
@@ -160,7 +172,7 @@ namespace WpfGameSandbox
             EnemyDelay--;
             if(EnemyDelay < 0)
             {
-                EnemyDelay = 40;
+                EnemyDelay = 30;
                 Image img = new Image() { Width=50,Height=50};
                 Canvas.SetLeft(img, random.Next(10,500));
                 Canvas.SetTop(img,0);
